@@ -5,8 +5,8 @@ const MAX_TURN = 6;
 export const useWordle = solution => {
   const [turn, setTurn] = useState(0);
   const [currentGuess, setCurrentGuess] = useState("");
-  const [guesses, setGuesses] = useState([]);
-  const [history, setHistory] = useState(["hello", "ninja"]);
+  const [guesses, setGuesses] = useState([...Array(6)]);
+  const [history, setHistory] = useState([]);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const formatGuess = () => {
@@ -32,7 +32,23 @@ export const useWordle = solution => {
     return formattedGuess;
   };
 
-  const addNewGuess = () => {};
+  const addNewGuess = formattedGuess => {
+    if (currentGuess === solution) {
+      setIsCorrect(true);
+    }
+    setGuesses(state => {
+      let newGuesses = [...state];
+      newGuesses[turn] = formattedGuess;
+      return newGuesses;
+    });
+    setHistory(state => {
+      return [...state, currentGuess];
+    });
+    setTurn(state => {
+      return state + 1;
+    });
+    setCurrentGuess("");
+  };
 
   const handleKeyUp = ({ key }) => {
     if (key === "Enter") {
@@ -49,7 +65,7 @@ export const useWordle = solution => {
         return;
       }
       const formatted = formatGuess();
-      console.log(formatted);
+      addNewGuess(formatted);
     }
 
     if (key === "Backspace") {
