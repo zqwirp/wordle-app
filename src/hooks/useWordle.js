@@ -6,14 +6,32 @@ export const useWordle = solution => {
   const [turn, setTurn] = useState(0);
   const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState([]);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState(["hello", "ninja"]);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  const formatGuess = () => {};
+  const formatGuess = () => {
+    console.log("formatting guess - ", currentGuess);
+  };
 
   const addNewGuess = () => {};
 
   const handleKeyUp = ({ key }) => {
+    if (key === "Enter") {
+      if (turn > 5) {
+        console.log("only 5 turn");
+        return;
+      }
+      if (history.includes(currentGuess)) {
+        console.log("already tried");
+        return;
+      }
+      if (currentGuess.length !== 5) {
+        console.log("must 5 word");
+        return;
+      }
+      formatGuess();
+    }
+
     if (key === "Backspace") {
       setCurrentGuess(currentState => {
         return currentGuess.slice(0, -1);
