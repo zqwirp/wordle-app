@@ -1,23 +1,21 @@
 function Modal({ isCorrect, turn, solution }) {
   return (
-    <div className='modal'>
-      {isCorrect ? (
-        <div>
-          You win
-          <br />
-          solution - {solution}
-          <br />
-          turn - {turn}
-        </div>
-      ) : (
-        <div>
-          Nevermind!
-          <br />
-          solution - {solution}
-          <br />
-          Better luck next time...
-        </div>
-      )}
+    <div className='modal-backdrop'>
+      <div className='modal'>
+        {isCorrect ? (
+          <>
+            <div className='modal__head'>You win!</div>
+            <div className='solution'>Solution: {solution}</div>
+            <div>Total turn: {turn}</div>
+          </>
+        ) : (
+          <>
+            <div className='modal__head'>Nevermind!</div>
+            <div className='solution'>Solution: {solution}</div>
+            <div>Better luck next time...</div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
