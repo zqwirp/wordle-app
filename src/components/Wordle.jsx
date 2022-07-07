@@ -9,15 +9,22 @@ function Wordle({ solution }) {
 
   useEffect(() => {
     window.addEventListener("keyup", handleKeyUp);
+
+    if (isCorrect) {
+      console.log("you win");
+      window.removeEventListener("keyup", handleKeyUp);
+    }
+
+    if (turn > 5) {
+      console.log("5 turn!");
+      window.removeEventListener("keyup", handleKeyUp);
+    }
+
     return () => {
       console.log("clean up");
       return window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [handleKeyUp]);
-
-  useEffect(() => {
-    console.log(guesses, turn, isCorrect);
-  }, [guesses, turn, isCorrect]);
+  }, [handleKeyUp, isCorrect]);
 
   return (
     <>
