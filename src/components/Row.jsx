@@ -1,4 +1,4 @@
-function Row({ guess, currentGuess }) {
+function Row({ guess, currentGuess, deleteChar }) {
   if (guess) {
     return (
       <div className='row past'>
@@ -15,16 +15,27 @@ function Row({ guess, currentGuess }) {
     let letters = currentGuess.split("");
 
     return (
-      <div className='row current'>
-        {letters.map((l, i) => (
-          <div key={i} className='filled'>
-            {l}
-          </div>
-        ))}
-        {[...Array(5 - letters.length)].map((_, i) => (
-          <div key={i}></div>
-        ))}
-      </div>
+      <>
+        <div className='row current'>
+          {letters.map((l, i) => (
+            <div
+              key={i}
+              // className='filled'
+              className={`filled ${i === letters.length - 1 ? "del" : ""}`}
+              onClick={e => {
+                if (i === letters.length - 1) {
+                  deleteChar();
+                }
+              }}
+            >
+              {l}
+            </div>
+          ))}
+          {[...Array(5 - letters.length)].map((_, i) => (
+            <div key={i}></div>
+          ))}
+        </div>
+      </>
     );
   }
 

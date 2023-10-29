@@ -76,39 +76,67 @@ export const useWordle = solution => {
     setCurrentGuess("");
   };
 
-  const handleKeyUp = ({ key }) => {
-    if (key === "Enter") {
-      if (turn > 5) {
-        console.log("only 5 turn");
-        return;
-      }
-      if (history.includes(currentGuess)) {
-        console.log("already tried");
-        return;
-      }
-      if (currentGuess.length !== 5) {
-        console.log("must 5 word");
-        return;
-      }
-      const formatted = formatGuess();
-      addNewGuess(formatted);
-    }
-
-    if (key === "Backspace") {
-      setCurrentGuess(currentState => {
-        return currentGuess.slice(0, -1);
-      });
+  const submitAnswer = () => {
+    if (turn > 5) {
+      console.log("only 5 turn");
       return;
     }
+    if (history.includes(currentGuess)) {
+      console.log("already tried");
+      return;
+    }
+    if (currentGuess.length !== 5) {
+      console.log("must 5 word");
+      return;
+    }
+    const formatted = formatGuess();
+    addNewGuess(formatted);
+  };
 
-    if (/^[a-zA-Z]$/.test(key)) {
-      if (currentGuess.length < 5) {
-        setCurrentGuess(currentState => {
-          return currentState + key;
-        });
-      }
+  const inputChar = char => {
+    if (currentGuess.length < 5) {
+      setCurrentGuess(currentState => {
+        return currentState + char;
+      });
     }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, handleKeyUp, usedKeys };
+  const deleteChar = () => {
+    setCurrentGuess(currentState => {
+      return currentGuess.slice(0, -1);
+    });
+    return;
+  };
+
+  const handleKeyUp = ({ key }) => {
+    if (key === "Enter") {
+      submitAnswer();
+    }
+
+    if (key === "Backspace") {
+      deleteChar();
+    }
+
+    if (/^[a-zA-Z]$/.test(key)) {
+      inputChar(key);
+    }
+  };
+
+  const clickChar = char => {
+    if (/^[a-zA-Z]$/.test(char)) {
+      inputChar(char);
+    }
+  };
+
+  return {
+    turn,
+    currentGuess,
+    guesses,
+    isCorrect,
+    handleKeyUp,
+    usedKeys,
+    clickChar,
+    submitAnswer,
+    deleteChar,
+  };
 };

@@ -14,6 +14,9 @@ function Wordle() {
     isCorrect,
     turn,
     usedKeys,
+    clickChar,
+    submitAnswer,
+    deleteChar,
   } = useWordleContext();
 
   const [showModal, setShowModal] = useState(false);
@@ -38,9 +41,18 @@ function Wordle() {
 
   return (
     <>
-      <div>solution - {solution}</div>
-      <Grid currentGuess={currentGuess} guesses={guesses} turn={turn} />
-      <Keypad usedKeys={usedKeys} />
+      {/* <div>solution - {solution}</div> */}
+      <Grid
+        currentGuess={currentGuess}
+        guesses={guesses}
+        turn={turn}
+        deleteChar={deleteChar}
+      />
+      <Keypad
+        usedKeys={usedKeys}
+        submitAnswer={submitAnswer}
+        clickChar={clickChar}
+      />
       {showModal && (
         <Modal isCorrect={isCorrect} turn={turn} solution={solution} />
       )}

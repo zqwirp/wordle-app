@@ -16,8 +16,17 @@ export function WordleProvider({ children }) {
     return randomSolution.word;
   });
 
-  const { currentGuess, handleKeyUp, guesses, isCorrect, turn, usedKeys } =
-    useWordle(solution);
+  const {
+    currentGuess,
+    handleKeyUp,
+    guesses,
+    isCorrect,
+    turn,
+    usedKeys,
+    clickChar,
+    submitAnswer,
+    deleteChar,
+  } = useWordle(solution);
 
   return (
     <WordleContext.Provider
@@ -30,6 +39,9 @@ export function WordleProvider({ children }) {
         isCorrect,
         turn,
         usedKeys,
+        clickChar,
+        submitAnswer,
+        deleteChar,
       }}
     >
       {children}
